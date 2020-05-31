@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: angular-pod-yema
+  labels:
+    app: yema
+    type: frontend
+spec:
+  containers:
+    - name: angular-container
+      image: alejandro180192/yema-front:latest
+

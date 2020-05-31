@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: certls-api-yema
+  namespace: kube-system
+spec:
+  secretName: certls-api-yema
+  issuerRef: 
+    name: lensencrypt-prod
+    kind: ClusterIssuer
+  commonName: "api.yema.masmenosinfinito.com"
+  dnsNames: 
+  - "api.yema.masmenosinfinito.com"
