@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "ingress-static-api"
+    kubernetes.io/ingress.class: "gce"
+    cert-manager.io/cluster-issuer: "lensencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+
+spec:
+  tls:
+    - hosts: 
+      - app.yema.masmenosinfinito.com
+      secretName: certls-app-yema
+    - hosts: 
+      - api.yema.masmenosinfinito.com
+      secretName: certls-api-yema
+  rules:
+    - host: api.yema.masmenosinfinito.com
+      http:
+        paths:
+        - path: /static/*
+          backend:
+            serviceName: django-api-service-yema
+            servicePort: 80
+        - path: /api/*
+          backend:
+            serviceName: django-api-service-yema
+            servicePort: 8000
+        - path: /admin/*
+          backend:
+            serviceName: django-api-service-yema
+            servicePort: 8000
+    - host: app.yema.masmenosinfinito.com
+      http:
+        paths:
+        - path: /*
+          backend:
+            serviceName: angular-service-yema
+            servicePort: 7070
