@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django
+  labels:
+    deployment: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yema
+      type: backend
+  template:
+    metadata:
+      labels:
+        app: yema
+        type: backend
+    spec:
+      containers:
+      - name: django
+        image: alejandro180192/yema-back:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8000
+      # - name: djangoapi
+      #   image: alejandro180192/yema-back:latest
+      #   imagePullPolicy: Always
+      #   ports:
+      #     - containerPort: 80
+
